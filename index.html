@@ -14,7 +14,6 @@
 
     req.open('GET', '/dir');
     req.onload = function(e) {
-      console.log('e', e);
       var root = document.getElementById('root');
       if (req.status === 200) {
         var response = JSON.parse(req.responseText);
@@ -33,7 +32,6 @@
           root.appendChild(li);
         });
       }
-      console.log('new paras:', document.getElementsByTagName('p').length);
     }
     req.send();
   </script>
