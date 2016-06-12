@@ -1,0 +1,24 @@
+{
+  "name": "tesselbox",
+  "version": "0.0.1",
+  "description": "Tessel project for storing and accessing files on a USB drive attached to a Tessel 2 microcontroller.",
+  "main": "webserver.js",
+  "scripts": {
+    "deploy": "t2 push webserver.js",
+    "t2": "t2 run webserver.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://www.github.com/chrisbodhi/tesselbox",
+  "keywords": [
+    "Tessel",
+    "node.js",
+    "microcontroller"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=4.2.0"
+  },
+  "author": {
+    "Chris Boette <cboette@gmail.com> (http://newschematic.org)"
+  }
+}

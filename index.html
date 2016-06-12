@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tessel Web App</title>
+</head>
+<body>
+  <h1>Hello from Tessel!</h1>
+  <div id="root"></div>
+
+  <script type="text/javascript">
+    // Create a new XHR for communicating requests to our Tessel server
+    var req = new XMLHttpRequest();
+
+    req.open('GET', '/dir');
+    req.onload = function(e) {
+      console.log('e', e);
+      var root = document.getElementById('root');
+      if (req.status === 200) {
+        var response = JSON.parse(req.responseText);
+        var files = response.files;
+        files.forEach(function(file) {
+          var link = document.createElement('a');
+          link.innerHTML = file;
+
+          var href = document.createAttribute('href');
+          href.value = '/' + file;
+          link.setAttributeNode(href);
+
+          var li = document.createElement('li');
+          li.appendChild(link);
+
+          root.appendChild(li);
+        });
+      }
+      console.log('new paras:', document.getElementsByTagName('p').length);
+    }
+    req.send();
+  </script>
+</body>
+</html>
