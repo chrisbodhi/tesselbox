@@ -18,7 +18,5 @@
   "engines": {
     "node": ">=4.2.0"
   },
-  "author": {
-    "Chris Boette <cboette@gmail.com> (http://newschematic.org)"
-  }
+  "author": "Chris Boette <cboette@gmail.com> (http://newschematic.org)"
 }
