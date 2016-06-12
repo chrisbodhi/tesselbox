@@ -5,8 +5,7 @@
   "main": "webserver.js",
   "scripts": {
     "deploy": "t2 push webserver.js",
-    "t2": "t2 run webserver.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "t2": "t2 run webserver.js"
   },
   "repository": "https://www.github.com/chrisbodhi/tesselbox",
   "keywords": [
@@ -18,5 +17,8 @@
   "engines": {
     "node": ">=4.2.0"
   },
-  "author": "Chris Boette <cboette@gmail.com> (http://newschematic.org)"
+  "author": "Chris Boette <cboette@gmail.com> (http://newschematic.org)",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
 }
