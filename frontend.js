@@ -45,8 +45,8 @@ function handleDir(e) {
   // aint trying to change pages rn
   e.preventDefault();
   var req = new XMLHttpRequest();
-
-  req.open('GET', this.pathname);
+  var parentDir = this.pathname;
+  req.open('GET', parentDir);
   req.onload = function(e) {
     if (req.status === 200) {
       var response = JSON.parse(req.responseText);
@@ -66,7 +66,7 @@ function handleDir(e) {
           link.addEventListener('click', handleDir);
         }
 
-        href.value = '/' + file;
+        href.value = parentDir + '/' + file;
         link.setAttributeNode(href);
 
         if (linkClass) {
