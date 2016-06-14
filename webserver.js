@@ -14,9 +14,11 @@ function sendFile (filename, request, response) {
     response.writeHead(200, {"Content-Type": "text/html"});
   } else if (filename.includes('.js')) {
     response.writeHead(200, {"Content-Type": "text/javascript"});
+  } else if (filename.includes('.css')) {
+    response.writeHead(200, {"Content-Type": "text/css"});
   }
   console.log('about to send', filename);
-  fs.readFile(__dirname + filename, function (err, content) {
+  fs.readFile(path.join(__dirname, filename), function (err, content) {
     if (err) { throw new Error(err); }
 
     response.end(content);
@@ -29,6 +31,10 @@ app.get('/', function (request, response) {
 
 app.get('/frontend.js', function(request, response) {
   sendFile('/frontend.js', request, response);
+});
+
+app.get('/cutestrap.min.css', function(request, response) {
+  sendFile('/cutestrap.min.css', request, response);
 });
 
 // Make available the files in the USB drive inserted into the top port
