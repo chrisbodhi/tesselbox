@@ -1,11 +1,11 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
-// var tessel = require('tessel');
+var tessel = require('tessel');
 
 var app = express();
-var mount = '/mnt/sda1';
-// var mount = '/Volumes/USB\ DISK';
+var mount = '/mnt/sda1'; // usb drive in Tessel; top USB slot
+// var mount = '/Volumes/USB\ DISK'; // local machine's USB drive
 var port = 8080;
 
 // Respond to the request with our index.html page
@@ -47,17 +47,23 @@ app.get('/dir', function (request, response) {
   fs.readdir(mount, function(err, files) {
     if (err) {throw new Error(err); }
     console.log('working on that ajax');
+
     response.writeHead(200, {"Content-Type": "application/json"});
+
     files = files.filter(function(f) {
       return f[0] !== '.';
     });
+
     response.end(JSON.stringify({files: files}));
   });
 });
 
 // Add routes for files that are, in reality, *directories*!
 app.get(/[^A-z0-9\s]/, function (request, response) {
-  console.log('in app.get', request.url); // => in app.get /Coding%20Tests
+
+  // todo: improve handling of the favicon.ico file
+  if (request.url.includes('favicon')) {return; }
+
   var newDir = request.url.replace(/%20/g, ' ');
 
   fs.readdir(path.join(mount, newDir), function(err, files) {
@@ -65,13 +71,13 @@ app.get(/[^A-z0-9\s]/, function (request, response) {
 
     response.writeHead(200, {"Content-Type": "application/json"});
 
-    // Don't show hidden files
+    // Does not return hidden files
     files = files.filter(function(f) {
       return f[0] !== '.';
     });
 
-  //   // might want to serve another template-like HTML page
-  //   // and send this JSON that way
+    // might want to serve another template-like HTML page
+    // and send this JSON that way
     response.end(JSON.stringify({files: files}));
   });
 });
