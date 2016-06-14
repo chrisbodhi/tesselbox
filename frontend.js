@@ -10,24 +10,23 @@ req.onload = function(e) {
     var files = response.files;
     files.forEach(function(file) {
       var link = document.createElement('a');
-      var linkClass;
       var href = document.createAttribute('href');
       var li = document.createElement('li');
+      var linkClass = document.createAttribute('class');
 
       link.innerHTML = file;
 
-      if (!file.includes('.')) {
-        linkClass = document.createAttribute('class');
+      if (file.includes('.')) {
+        linkClass.value = 'file';
+        link.addEventListener('click', handleFile);
+      } else {
         linkClass.value = 'folder';
         link.addEventListener('click', handleDir);
       }
 
-      href.value = '/' + file;
+      href.value = file;
       link.setAttributeNode(href);
-
-      if (linkClass) {
-        link.setAttributeNode(linkClass);
-      }
+      link.setAttributeNode(linkClass);
 
       li.appendChild(link);
       root.appendChild(li);
@@ -37,13 +36,14 @@ req.onload = function(e) {
 
 req.send();
 
-// onclick for class='folder' to send off new xhr request
-// then handle that json reponse
 // and delete the `li` in the html?
 function handleDir(e) {
 
   // aint trying to change pages rn
   e.preventDefault();
+  var currentLinks = document.getElementsByTagName('li');
+  clearOut(currentLinks);
+
   var req = new XMLHttpRequest();
   var parentDir = this.pathname;
   req.open('GET', parentDir);
@@ -51,27 +51,25 @@ function handleDir(e) {
     if (req.status === 200) {
       var response = JSON.parse(req.responseText);
       var files = response.files;
-
       files.forEach(function(file) {
         var link = document.createElement('a');
-        var linkClass;
         var href = document.createAttribute('href');
         var li = document.createElement('li');
+        var linkClass = document.createAttribute('class');
 
         link.innerHTML = file;
 
-        if (!file.includes('.')) {
-          linkClass = document.createAttribute('class');
+        if (file.includes('.')) {
+          linkClass.value = 'file';
+          link.addEventListener('click', handleFile);
+        } else {
           linkClass.value = 'folder';
           link.addEventListener('click', handleDir);
         }
 
         href.value = parentDir + '/' + file;
         link.setAttributeNode(href);
-
-        if (linkClass) {
-          link.setAttributeNode(linkClass);
-        }
+        link.setAttributeNode(linkClass);
 
         li.appendChild(link);
         root.appendChild(li);
@@ -79,4 +77,20 @@ function handleDir(e) {
     }
   }
   req.send();
+}
+
+function handleFile(e) {
+  e.preventDefault();
+  var iframe = document.getElementById('content');
+  var src = document.createAttribute('src');
+  var title = document.getElementById('file-title');
+  src.value = this.href;
+  title.innerText = this.text;
+  iframe.setAttributeNode(src);
+}
+
+function clearOut(links) {
+  for (var i = 0; i < links.length; i++) {
+    links[i].remove();
+  }
 }
