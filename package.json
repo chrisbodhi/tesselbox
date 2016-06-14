@@ -5,7 +5,7 @@
   "main": "webserver.js",
   "scripts": {
     "deploy": "t2 push webserver.js",
-    "t2": "t2 run webserver.js"
+    "local": "t2 run webserver.js"
   },
   "repository": "https://www.github.com/chrisbodhi/tesselbox",
   "keywords": [
