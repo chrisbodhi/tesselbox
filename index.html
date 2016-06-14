@@ -7,11 +7,18 @@
   <style type="text/css">
     body { margin: 15px; }
     li { list-style: none; }
+    iframe#content { height: 800px; width: 100%; }
   </style>
 </head>
 <body>
   <h1>Tesselbox</h1>
-  <div id="root"></div>
+  <section class="grid">
+    <div id="root"></div>
+    <div id="iframeHolder">
+      <h4 id="file-title"></h4>
+      <iframe id="content"></iframe>
+    </div>
+  </section>
 
   <script async src="frontend.js"></script>
 </body>
