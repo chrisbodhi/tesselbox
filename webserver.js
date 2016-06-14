@@ -17,7 +17,9 @@ function sendFile (filename, request, response) {
   } else if (filename.includes('.css')) {
     response.writeHead(200, {"Content-Type": "text/css"});
   }
+
   console.log('about to send', filename);
+
   fs.readFile(path.join(__dirname, filename), function (err, content) {
     if (err) { throw new Error(err); }
 
@@ -56,7 +58,7 @@ app.get('/dir', function (request, response) {
 // Add routes for files that are, in reality, *directories*!
 app.get(/[^A-z0-9\s]/, function (request, response) {
   console.log('in app.get', request.url); // => in app.get /Coding%20Tests
-  var newDir = request.url.replace('%20', ' ');
+  var newDir = request.url.replace(/%20/g, ' ');
 
   fs.readdir(path.join(mount, newDir), function(err, files) {
     if (err) {throw new Error(err); }
