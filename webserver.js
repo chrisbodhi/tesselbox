@@ -4,8 +4,8 @@ var path = require('path');
 // var tessel = require('tessel');
 
 var app = express();
-// var mount = '/mnt/sda1';
-var mount = '/Volumes/USB\ DISK';
+var mount = '/mnt/sda1';
+// var mount = '/Volumes/USB\ DISK';
 var port = 8080;
 
 // Respond to the request with our index.html page
@@ -64,10 +64,12 @@ app.get(/[^A-z0-9\s]/, function (request, response) {
     if (err) {throw new Error(err); }
 
     response.writeHead(200, {"Content-Type": "application/json"});
+
+    // Don't show hidden files
     files = files.filter(function(f) {
       return f[0] !== '.';
     });
-    console.log('files', files);
+
   //   // might want to serve another template-like HTML page
   //   // and send this JSON that way
     response.end(JSON.stringify({files: files}));
